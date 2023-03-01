@@ -1,2 +1,2 @@
-# Album-de-figus
+# Album_figus
 Exactas programa ejercio 01
