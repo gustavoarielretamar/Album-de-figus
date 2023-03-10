@@ -1,53 +1,59 @@
-#variables globales
+#%% LIBRERIAS:
 import random
+
 figus = 6
 repeticiones = 1000
 resultados=[]
-figusMaximas =0
+figusMaximas = 2000
 muchos_resultados_album_de_6 = resultados
 probabilidadesDeseadas= 0.9 #numero entre 0 y 1
 
-#LLENAR un album
-def cuantas_figus(figus_total): #aca definimos la función
+#%% FIGURITAS NECESARIAS PARA LLENAR UN ALBUM:
+def cuantas_figus(figus_total, debug = False): #aca definimos la función
     album = [0]*figus_total
     contador = 0
     while sum (album) < figus_total:
         figu = random.randint(0, figus_total - 1)
         contador = contador+1
         album[figu]= 1
+    if debug:
+        print(contador)
     return contador
 
-#promediar una lista
-def promedio (lista):
+
+#%% PROMEDIA LOS VALORES DE UNA LISTA:
+def promedio (lista, debug = False):
     promedio = sum(lista)/len(lista)
-    #print (promedio)
+    if debug:
+        print (promedio)
     return promedio
 
-#LOOP para llenar varios álbumes
-def simular_muchas_repeticiones(n_rep, figus_total):
+#%% LOOP para llenar varios álbumes
+def simular_muchas_repeticiones(n_rep, figus_total, debug = False):
     contador = 0
     while contador < n_rep:
         nuevo_resultado = cuantas_figus(figus_total)
         muchos_resultados_album_de_6.append(nuevo_resultado)
         contador = contador+1
     promedio (muchos_resultados_album_de_6)
+    if debug:
+        print(muchos_resultados_album_de_6)
+        print(promedio(muchos_resultados_album_de_6))
     return muchos_resultados_album_de_6
-simular_muchas_repeticiones(repeticiones, figus)
 
 
-#calcular probabilidad
-def dame_chance(resultados, cantidad_maxima):
-    iterator = 0
+#%% calcular probabilidad
+def dame_chance(resultados, cantidad_maxima, debug = False):
+    i = 0
     meSirve = 0
-    while iterator<len(resultados):
-        if resultados[iterator] <= cantidad_maxima:
+    while i < len(resultados):
+        if resultados[i] <= cantidad_maxima:
             meSirve = meSirve + 1
-        iterator = iterator + 1
-    chances= meSirve/len(resultados)
-    print (chances)
+        i = i + 1
+    chances = (meSirve/len(resultados))
+    if debug:
+        print (chances)
     return chances
-        
-#dame_chance(muchos_resultados_album_de_6, figusMaximas)
 
 
 def dale_comprame (resultados, figus_total, prob):
@@ -69,5 +75,3 @@ def dale_comprame (resultados, figus_total, prob):
         print (cantidadMaxima)
         return cantidadMaxima
 
-
-dale_comprame (muchos_resultados_album_de_6, figusMaximas, probabilidadesDeseadas)
