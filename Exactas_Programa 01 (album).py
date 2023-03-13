@@ -45,7 +45,7 @@ def dame_chance(resultados, cantidad_maxima, debug=False):
         if resultados[i] <= cantidad_maxima:
             meSirve = meSirve + 1
         i += 1
-    chances = meSirve / len(resultados)
+    chances = meSirve*100 / len(resultados)
     if debug:
         print(chances)
     return chances
@@ -53,8 +53,8 @@ def dame_chance(resultados, cantidad_maxima, debug=False):
 
 # %% DALE_COMPRAME, cuantas figuritas hay que comprar con PROB
 def dale_comprame(resultados, figus_total, prob, debug=False):
-    cont = figus_total
     probabilidad = 0
+    cont = figus_total
     while probabilidad < prob:
         probababilidad = dame_chance(resultados, cont)
         cont += 1
@@ -68,7 +68,7 @@ figus_total = 6
 n_rep = 1000
 resultados = simular_muchas_repeticiones(n_rep, figus_total)
 cantidad_maxima = 15
-prob = 0.9  # numero entre 0 y 1
+prob = 50  # numero entre 0 y 1
 # %% LLAMADAS:
 # simular_muchas_repeticiones(repeticiones, figus)
 # dame_chance(resultados, cantidad_maxima, True)
