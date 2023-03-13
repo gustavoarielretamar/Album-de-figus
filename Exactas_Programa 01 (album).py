@@ -1,77 +1,63 @@
-#%% LIBRERIAS:
+# %% LIBRERIAS:
 import random
-
-figus = 6
-repeticiones = 1000
-resultados=[]
-figusMaximas = 2000
-muchos_resultados_album_de_6 = resultados
-probabilidadesDeseadas= 0.9 #numero entre 0 y 1
-
-#%% FIGURITAS NECESARIAS PARA LLENAR UN ALBUM:
-def cuantas_figus(figus_total, debug = False): #aca definimos la función
+# %% CUANTAS_FIGUS, cantidad de figuritas para llenar un album:
+def cuantas_figus(figus_total, debug = False):
     album = [0]*figus_total
-    contador = 0
+    cont = 0
     while sum (album) < figus_total:
         figu = random.randint(0, figus_total - 1)
-        contador = contador+1
+        cont += 1
         album[figu]= 1
     if debug:
-        print(contador)
-    return contador
-
-
-#%% PROMEDIA LOS VALORES DE UNA LISTA:
+        print(cont)
+    return cont
+# %% PROMEDIO, promediar una lista:
 def promedio (lista, debug = False):
-    promedio = sum(lista)/len(lista)
+    prom = sum(lista)/len(lista)
     if debug:
-        print (promedio)
-    return promedio
-
-#%% LOOP para llenar varios álbumes
+        print (prom)
+    return prom
+# %% SIMULAR_MUCHAS_REPETICIONES, llena n cantidad de albumes:
 def simular_muchas_repeticiones(n_rep, figus_total, debug = False):
-    contador = 0
-    while contador < n_rep:
-        nuevo_resultado = cuantas_figus(figus_total)
-        muchos_resultados_album_de_6.append(nuevo_resultado)
-        contador = contador+1
-    promedio (muchos_resultados_album_de_6)
+    n_resultados = [0] * n_rep
+    cont = 0
+    while cont < n_rep:
+        resultado = cuantas_figus(figus_total)
+        n_resultados.append(resultado)
+        cont += 1
+    # promedio (muchos_resultados_album_de_6)
     if debug:
-        print(muchos_resultados_album_de_6)
-        print(promedio(muchos_resultados_album_de_6))
-    return muchos_resultados_album_de_6
-
-
-#%% calcular probabilidad
+        print(n_resultados)
+    return n_resultados
+# %% DAME_ CHANCES, calcular probabilidad:
 def dame_chance(resultados, cantidad_maxima, debug = False):
     i = 0
     meSirve = 0
-    while i < len(resultados):
+    while i<len(resultados):
         if resultados[i] <= cantidad_maxima:
             meSirve = meSirve + 1
-        i = i + 1
-    chances = (meSirve/len(resultados))
+        i += 1
+    chances = meSirve/len(resultados)
     if debug:
         print (chances)
     return chances
-
-
-def dale_comprame (resultados, figus_total, prob):
-    if figus_total > 0:
-        dame_chance(muchos_resultados_album_de_6, figusMaximas)
-    else:
-        probabilidad = 0
-        cantidadMaxima = figus
-        while probabilidad < prob:
-            iterator = 0
-            meSirve = 0
-            while iterator<len(resultados):
-                if resultados[iterator] <= cantidadMaxima:
-                    meSirve = meSirve + 1
-                iterator = iterator + 1
-            chances= meSirve/len(resultados)
-            probabilidad = chances
-            cantidadMaxima = cantidadMaxima + 1
-        print (cantidadMaxima)
-        return cantidadMaxima
-
+# %% DALE_COMPRAME, cuantas figuritas hay que comprar con PROB
+def dale_comprame (resultados, figus_total, prob, debug = False):
+    cont = figus_total
+    probabilidad = 0
+    while probabilidad < prob:
+        probababilidad = dame_chance(resultados, cont)
+        cont += 1
+    if debug:
+        print (cont)
+    return cont
+# %% PARAMETROS:
+figus_total = 6
+n_rep = 1000
+resultados = simular_muchas_repeticiones(n_rep, figus_total)
+cantidad_maxima = 15
+prob= 0.9 #numero entre 0 y 1
+# %% LLAMADAS:
+# simular_muchas_repeticiones(repeticiones, figus)
+# dame_chance(resultados, cantidad_maxima, True)
+dale_comprame (resultados, figus_total, prob, True)
